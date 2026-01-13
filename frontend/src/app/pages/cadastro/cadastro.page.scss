@@ -1,0 +1,57 @@
+.form-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+ion-card {
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+ion-item {
+  --padding-start: 0;
+  margin-bottom: 16px;
+}
+
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: 12px;
+  padding: 0 16px;
+  margin-top: -12px;
+  margin-bottom: 12px;
+}
+
+.help-text {
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.health-checkboxes {
+  padding: 12px 0;
+}
+
+.health-checkboxes ion-item {
+  margin-bottom: 8px;
+}
+
+.submit-button {
+  margin-top: 24px;
+  font-weight: 600;
+}
+
+.info-card {
+  background: var(--ion-color-light);
+}
+
+.info-card ion-icon {
+  font-size: 24px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.info-card p {
+  display: inline;
+  font-size: 14px;
+  color: var(--ion-color-medium);
+}

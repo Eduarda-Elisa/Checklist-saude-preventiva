@@ -1,0 +1,171 @@
+.checklist-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.progress-card {
+  margin-bottom: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.progress-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.progress-percentage {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--ion-color-success);
+}
+
+.progress-info {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--ion-color-medium);
+  text-align: center;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--ion-color-medium);
+}
+
+.empty-state ion-icon {
+  font-size: 80px;
+  margin-bottom: 16px;
+}
+
+.category-section {
+  margin-bottom: 32px;
+}
+
+.category-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+  margin-bottom: 12px;
+  padding-left: 4px;
+}
+
+.checklist-item-card {
+  margin-bottom: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.item-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-info h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.item-info h4.completed {
+  text-decoration: line-through;
+  color: var(--ion-color-medium);
+}
+
+.item-meta {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.item-details {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--ion-color-light);
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: var(--ion-color-medium);
+}
+
+.detail-row ion-icon {
+  font-size: 18px;
+}
+
+.action-buttons {
+  margin-top: 32px;
+  margin-bottom: 20px;
+}
+
+.add-form-card {
+  margin-bottom: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.add-form-card ion-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+}
+
+.add-form-card ion-item {
+  --padding-start: 0;
+  margin-bottom: 16px;
+}
+
+.add-form-card ion-list {
+  background: var(--ion-color-light);
+  border-radius: 8px;
+  margin: -8px 0 16px 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.add-form-card ion-list ion-item {
+  --background: transparent;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.add-form-card ion-list ion-item:hover {
+  --background: var(--ion-color-light-shade);
+}
+
+.form-buttons {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

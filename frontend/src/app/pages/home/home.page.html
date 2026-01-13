@@ -1,0 +1,133 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Checklist de Saúde Preventiva</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="home-container">
+    <div class="welcome-section">
+      <ion-icon name="heart" class="main-icon"></ion-icon>
+      <h1>Cuide da sua saúde</h1>
+      <p class="subtitle">
+        Mantenha seus exames e consultas em dia com nosso checklist personalizado
+      </p>
+    </div>
+
+    <ion-card *ngIf="currentUser" class="user-card">
+      <ion-card-header>
+        <ion-card-subtitle>Bem-vindo(a)</ion-card-subtitle>
+        <ion-card-title>{{ currentUser.name }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Email:</strong> {{ currentUser.email }}</p>
+        <p><strong>Idade:</strong> {{ currentUser.age }} anos</p>
+        <p><strong>Sexo:</strong> {{ currentUser.sex === 'masculino' ? 'Masculino' : 'Feminino' }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="currentUser && notifications.length > 0" class="notifications-card">
+      <ion-card-header>
+        <div class="notifications-header">
+          <ion-card-title>
+            <ion-icon name="notifications"></ion-icon>
+            Notificações
+          </ion-card-title>
+          <ion-badge [color]="unreadCount > 0 ? 'danger' : 'medium'">
+            {{ notifications.length }}
+          </ion-badge>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item 
+            *ngFor="let notification of notifications" 
+            [class.unread]="!notification.read"
+            (click)="markAsRead(notification)">
+            <ion-icon 
+              [name]="notification.type === 'urgent' ? 'alert-circle' : 'time'" 
+              slot="start"
+              [color]="getNotificationColor(notification)">
+            </ion-icon>
+            <ion-label>
+              <h3 [style.color]="notification.type === 'urgent' ? 'var(--ion-color-danger)' : ''">
+                {{ getNotificationMessage(notification) }}
+              </h3>
+              <p>Data: {{ notification.date | date: 'dd/MM/yyyy' }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="buttons-section">
+      <ion-button 
+        *ngIf="!currentUser" 
+        expand="block" 
+        (click)="navigateToCadastro()"
+        class="main-button">
+        <ion-icon slot="start" name="person-add"></ion-icon>
+        Cadastrar Informações
+      </ion-button>
+
+      <ion-button 
+        *ngIf="currentUser" 
+        expand="block" 
+        (click)="navigateToChecklist()"
+        class="main-button">
+        <ion-icon slot="start" name="list"></ion-icon>
+        Meu Checklist
+      </ion-button>
+
+      <ion-button 
+        *ngIf="currentUser" 
+        expand="block" 
+        fill="outline"
+        (click)="navigateToLembretes()"
+        class="main-button">
+        <ion-icon slot="start" name="notifications"></ion-icon>
+        Lembretes
+      </ion-button>
+
+      <ion-button 
+        *ngIf="currentUser" 
+        expand="block" 
+        fill="outline"
+        (click)="navigateToCadastro()"
+        class="main-button">
+        <ion-icon slot="start" name="create"></ion-icon>
+        Atualizar Dados
+      </ion-button>
+
+      <ion-button 
+        *ngIf="currentUser" 
+        expand="block" 
+        fill="clear"
+        color="medium"
+        (click)="logout()"
+        class="main-button">
+        <ion-icon slot="start" name="log-out"></ion-icon>
+        Sair
+      </ion-button>
+    </div>
+
+    <div class="info-section">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Sobre o Projeto</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>
+            Este sistema foi desenvolvido para incentivar o cuidado preventivo à saúde,
+            gerando checklists personalizados de exames e consultas médicas baseados
+            nas suas informações de saúde.
+          </p>
+          <p class="mt-16">
+            <strong>Clínica Médica Franco da Rocha</strong><br>
+            Avenida Dr. Hamilton Prado
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

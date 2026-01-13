@@ -1,0 +1,172 @@
+.lembretes-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.add-form-card {
+  margin-bottom: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.add-form-card ion-item {
+  --padding-start: 0;
+  margin-bottom: 16px;
+}
+
+.form-section {
+  margin-bottom: 20px;
+}
+
+.section-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--ion-color-dark);
+}
+
+.exames-list {
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid var(--ion-color-light);
+  border-radius: 8px;
+  margin: 8px 0 16px 0;
+  padding: 8px;
+  background: var(--ion-color-light-shade);
+}
+
+.exames-list ion-item {
+  --padding-start: 8px;
+  margin-bottom: 4px;
+  --background: transparent;
+}
+
+.exames-list ion-radio {
+  margin-right: 12px;
+}
+
+ion-searchbar {
+  --background: var(--ion-color-light);
+  --border-radius: 8px;
+  padding: 0;
+}
+
+.date-item {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.date-item ion-datetime {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.submit-button {
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--ion-color-medium);
+}
+
+.empty-state ion-icon {
+  font-size: 80px;
+  margin-bottom: 16px;
+}
+
+.empty-state ion-button {
+  margin-top: 20px;
+}
+
+.reminders-list {
+  margin-top: 20px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+  margin-bottom: 16px;
+  padding-left: 4px;
+}
+
+.reminder-card {
+  margin-bottom: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.reminder-card.past {
+  opacity: 0.6;
+}
+
+.reminder-card.inactive {
+  opacity: 0.5;
+}
+
+.reminder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.reminder-main {
+  flex: 1;
+}
+
+.reminder-main h4 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.reminder-item {
+  font-size: 14px;
+  color: var(--ion-color-primary);
+  margin: 4px 0;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reminder-item ion-icon {
+  font-size: 16px;
+}
+
+.reminder-description {
+  font-size: 14px;
+  color: var(--ion-color-medium);
+  margin: 8px 0 0 0;
+}
+
+.reminder-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--ion-color-light);
+}
+
+.reminder-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--ion-color-medium);
+}
+
+.reminder-date ion-icon {
+  font-size: 18px;
+}
+
+ion-datetime-button {
+  display: block;
+  width: 100%;
+}

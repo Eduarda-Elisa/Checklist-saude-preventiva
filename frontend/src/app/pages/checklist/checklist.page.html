@@ -1,0 +1,151 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Meu Checklist</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleAddForm()">
+        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+      </ion-button>
+      <ion-button (click)="regenerateChecklist()">
+        <ion-icon slot="icon-only" name="refresh"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="checklist-container">
+    <ion-card *ngIf="checklist" class="progress-card">
+      <ion-card-content>
+        <div class="progress-header">
+          <h2>Progresso Geral</h2>
+          <span class="progress-percentage">{{ getCompletedPercentage() }}%</span>
+        </div>
+        <ion-progress-bar [value]="getCompletedPercentage() / 100" color="success"></ion-progress-bar>
+        <p class="progress-info">
+          {{ getCompletedCount() }} de {{ getTotalCount() }} itens concluídos
+        </p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Formulário para adicionar novo item -->
+    <ion-card *ngIf="showAddForm" class="add-form-card">
+      <ion-card-header>
+        <ion-card-title>Adicionar Novo Exame/Consulta</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Exame/Consulta *</ion-label>
+          <ion-searchbar
+            [(ngModel)]="newItem.name"
+            (ionInput)="filterExames($event)"
+            placeholder="Buscar ou digitar nome..."
+            [debounce]="300">
+          </ion-searchbar>
+        </ion-item>
+
+        <ion-list *ngIf="filteredExames.length > 0 && newItem.name && filteredExames.length < allExames.length">
+          <ion-item *ngFor="let exame of filteredExames.slice(0, 5)" (click)="newItem.name = exame; filteredExames = []">
+            <ion-label>{{ exame }}</ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-item>
+          <ion-label position="stacked">Tipo</ion-label>
+          <ion-select [(ngModel)]="newItem.type" placeholder="Selecione">
+            <ion-select-option value="exam">Exame</ion-select-option>
+            <ion-select-option value="consultation">Consulta</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Frequência *</ion-label>
+          <ion-select [(ngModel)]="newItem.frequency" placeholder="Selecione a frequência">
+            <ion-select-option *ngFor="let option of periodOptions" [value]="option.value">
+              {{ option.label }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Categoria</ion-label>
+          <ion-select [(ngModel)]="newItem.category" placeholder="Automático (ou selecione)">
+            <ion-select-option *ngFor="let cat of categoryOptions" [value]="cat">
+              {{ cat }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Prioridade</ion-label>
+          <ion-select [(ngModel)]="newItem.priority" placeholder="Selecione">
+            <ion-select-option value="alta">Alta</ion-select-option>
+            <ion-select-option value="media">Média</ion-select-option>
+            <ion-select-option value="baixa">Baixa</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <div class="form-buttons">
+          <ion-button expand="block" (click)="addNewItem()" color="primary">
+            <ion-icon slot="start" name="add"></ion-icon>
+            Adicionar ao Checklist
+          </ion-button>
+          <ion-button expand="block" fill="outline" (click)="toggleAddForm()">
+            Cancelar
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <div *ngIf="!checklist" class="empty-state">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <p>Nenhum checklist encontrado</p>
+    </div>
+
+    <div *ngFor="let category of categories" class="category-section">
+      <h3 class="category-title">{{ category }}</h3>
+
+      <ion-card *ngFor="let item of groupedItems[category]" class="checklist-item-card">
+        <ion-card-content>
+          <div class="item-header">
+            <ion-checkbox
+              [checked]="item.completed"
+              (ionChange)="toggleItemComplete(item)"
+            ></ion-checkbox>
+            <div class="item-info">
+              <h4 [class.completed]="item.completed">{{ item.name }}</h4>
+              <div class="item-meta">
+                <ion-badge [color]="item.type === 'exam' ? 'tertiary' : 'secondary'">
+                  {{ item.type === 'exam' ? 'Exame' : 'Consulta' }}
+                </ion-badge>
+                <span class="priority-badge priority-{{ item.priority }}">
+                  {{ item.priority === 'alta' ? 'Alta' : item.priority === 'media' ? 'Média' : 'Baixa' }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-details">
+            <div class="detail-row">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>{{ item.frequency }}</span>
+            </div>
+            <div class="detail-row" *ngIf="item.lastUpdate">
+              <ion-icon name="calendar-outline"></ion-icon>
+              <span>Última atualização: {{ item.lastUpdate | date: 'dd/MM/yyyy' }}</span>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <div class="action-buttons">
+      <ion-button expand="block" fill="outline" routerLink="/lembretes">
+        <ion-icon slot="start" name="notifications"></ion-icon>
+        Gerenciar Lembretes
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

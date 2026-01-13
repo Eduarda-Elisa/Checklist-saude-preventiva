@@ -1,0 +1,7 @@
+{
+  "name": "checklist-saude-frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

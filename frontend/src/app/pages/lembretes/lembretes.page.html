@@ -1,0 +1,146 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Lembretes</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleAddForm()">
+        <ion-icon slot="icon-only" [name]="showAddForm ? 'close' : 'add'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="lembretes-container">
+    <ion-card *ngIf="showAddForm" class="add-form-card">
+      <ion-card-header>
+        <ion-card-title>Novo Lembrete</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="form-section">
+          <ion-label class="section-label">Exame ou Consulta *</ion-label>
+          <ion-searchbar
+            [(ngModel)]="searchTerm"
+            (ionInput)="filterExames($event)"
+            placeholder="Pesquisar exame ou consulta"
+            debounce="300"
+          ></ion-searchbar>
+
+          <div class="exames-list">
+            <ion-radio-group [(ngModel)]="newReminder.examName">
+              <ion-item *ngFor="let exame of filteredExames" lines="none">
+                <ion-radio [value]="exame">{{ exame }}</ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </div>
+        </div>
+
+        <ion-item>
+          <ion-label position="floating">Título Personalizado (Opcional)</ion-label>
+          <ion-input 
+            [(ngModel)]="newReminder.title" 
+            placeholder="Ex: Agendar com Dr. Silva">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descrição</ion-label>
+          <ion-textarea 
+            [(ngModel)]="newReminder.description" 
+            placeholder="Detalhes adicionais"
+            rows="2">
+          </ion-textarea>
+        </ion-item>
+
+        <ion-item class="date-item">
+          <ion-label position="stacked">Data do Próximo Exame *</ion-label>
+          <ion-datetime
+            [(ngModel)]="newReminder.date"
+            presentation="date"
+            [min]="minDate"
+            displayFormat="DD/MM/YYYY"
+            locale="pt-BR"
+          ></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Período de Recorrência</ion-label>
+          <ion-select [(ngModel)]="newReminder.period" placeholder="Selecione a frequência">
+            <ion-select-option 
+              *ngFor="let period of periodOptions" 
+              [value]="period.value">
+              {{ period.label }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-checkbox [(ngModel)]="newReminder.recurring">
+            Ativar lembretes automáticos
+          </ion-checkbox>
+        </ion-item>
+
+        <ion-button expand="block" (click)="createReminder()" class="submit-button">
+          <ion-icon slot="start" name="checkmark"></ion-icon>
+          Criar Lembrete
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <div *ngIf="reminders.length === 0 && !showAddForm" class="empty-state">
+      <ion-icon name="notifications-off-outline"></ion-icon>
+      <p>Nenhum lembrete cadastrado</p>
+      <ion-button fill="outline" (click)="toggleAddForm()">
+        <ion-icon slot="start" name="add"></ion-icon>
+        Adicionar Lembrete
+      </ion-button>
+    </div>
+
+    <div *ngIf="reminders.length > 0" class="reminders-list">
+      <h3 class="section-title">Meus Lembretes</h3>
+
+      <ion-card 
+        *ngFor="let reminder of reminders" 
+        class="reminder-card"
+        [class.past]="isReminderPast(reminder.date)"
+        [class.inactive]="!reminder.active">
+        <ion-card-content>
+          <div class="reminder-header">
+            <div class="reminder-main">
+              <h4>{{ reminder.title }}</h4>
+              <p class="reminder-item" *ngIf="reminder.examName">
+                <ion-icon name="fitness-outline"></ion-icon>
+                {{ reminder.examName }}
+              </p>
+              <p *ngIf="reminder.description" class="reminder-description">
+                {{ reminder.description }}
+              </p>
+            </div>
+            <ion-toggle 
+              [checked]="reminder.active" 
+              (ionChange)="toggleReminderActive(reminder)">
+            </ion-toggle>
+          </div>
+
+          <div class="reminder-footer">
+            <div class="reminder-date">
+              <ion-icon name="calendar-outline"></ion-icon>
+              <span>{{ reminder.date | date: 'dd/MM/yyyy' }}</span>
+              <ion-badge *ngIf="reminder.period" color="tertiary">{{ getPeriodLabel(reminder.period) }}</ion-badge>
+              <ion-badge *ngIf="reminder.recurring" color="secondary">Ativo</ion-badge>
+            </div>
+            <ion-button 
+              fill="clear" 
+              color="danger" 
+              size="small"
+              (click)="deleteReminder(reminder)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

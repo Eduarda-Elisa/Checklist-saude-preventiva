@@ -1,0 +1,97 @@
+.home-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.welcome-section {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.main-icon {
+  font-size: 80px;
+  color: var(--ion-color-primary);
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--ion-color-primary);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: var(--ion-color-medium);
+  margin-bottom: 20px;
+}
+
+.user-card {
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.notifications-card {
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid var(--ion-color-primary);
+}
+
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notifications-header ion-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notifications-header ion-icon {
+  font-size: 24px;
+}
+
+.notifications-card ion-list {
+  background: transparent;
+}
+
+.notifications-card ion-item {
+  --padding-start: 0;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.notifications-card ion-item:hover {
+  --background: var(--ion-color-light);
+}
+
+.notifications-card ion-item.unread {
+  --background: var(--ion-color-light-tint);
+  font-weight: 600;
+}
+
+.notifications-card ion-item ion-icon {
+  font-size: 28px;
+  margin-right: 12px;
+}
+
+.buttons-section {
+  margin: 30px 0;
+}
+
+.main-button {
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.info-section {
+  margin-top: 30px;
+}
+
+ion-card {
+  border-radius: 12px;
+}

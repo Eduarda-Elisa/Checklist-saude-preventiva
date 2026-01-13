@@ -1,0 +1,112 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isEditMode ? 'Atualizar Dados' : 'Cadastro' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="form-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Informações Pessoais</ion-card-title>
+        <ion-card-subtitle>
+          Preencha seus dados para gerar um checklist personalizado
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          <ion-item>
+            <ion-label position="floating">Nome Completo *</ion-label>
+            <ion-input
+              type="text"
+              formControlName="name"
+              placeholder="Digite seu nome"
+            ></ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+            Nome é obrigatório (mínimo 3 caracteres)
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">E-mail *</ion-label>
+            <ion-input
+              type="email"
+              formControlName="email"
+              placeholder="seu@email.com"
+            ></ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+            E-mail inválido
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">Idade *</ion-label>
+            <ion-input
+              type="number"
+              formControlName="age"
+              placeholder="Digite sua idade"
+            ></ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="userForm.get('age')?.invalid && userForm.get('age')?.touched">
+            Idade deve ser entre 1 e 120 anos
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">Sexo *</ion-label>
+            <ion-select formControlName="sex" placeholder="Selecione">
+              <ion-select-option value="masculino">Masculino</ion-select-option>
+              <ion-select-option value="feminino">Feminino</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="error-message" *ngIf="userForm.get('sex')?.invalid && userForm.get('sex')?.touched">
+            Selecione o sexo
+          </div>
+
+          <ion-item>
+            <ion-label position="stacked">Histórico de Saúde</ion-label>
+            <ion-text color="medium">
+              <p class="help-text">Selecione as condições que você possui ou já teve</p>
+            </ion-text>
+          </ion-item>
+
+          <div class="health-checkboxes">
+            <ion-item *ngFor="let condition of healthConditions" lines="none">
+              <ion-checkbox
+                [value]="condition.value"
+                (ionChange)="onCheckboxChange($event, condition.value)"
+                [checked]="userForm.get('healthHistory')?.value?.includes(condition.value)"
+              >
+                {{ condition.label }}
+              </ion-checkbox>
+            </ion-item>
+          </div>
+
+          <ion-button
+            expand="block"
+            type="submit"
+            class="submit-button"
+            [disabled]="userForm.invalid"
+          >
+            <ion-icon slot="start" name="{{ isEditMode ? 'save' : 'checkmark' }}"></ion-icon>
+            {{ isEditMode ? 'Atualizar Dados' : 'Cadastrar e Gerar Checklist' }}
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="info-card">
+      <ion-card-content>
+        <ion-icon name="information-circle" color="primary"></ion-icon>
+        <p>
+          Seus dados são utilizados exclusivamente para gerar um checklist
+          personalizado de exames e consultas médicas preventivas adequadas
+          ao seu perfil de saúde.
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
