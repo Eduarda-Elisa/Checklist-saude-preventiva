@@ -219,9 +219,10 @@ O sistema analisa os dados do usuário e gera recomendações baseadas em:
 
 ## Desenvolvido por
 
+Eduarda Elisa da Silva Oliveira
+RU: 4876813
+
+## Desenvolvido Para
 Sistema desenvolvido para a Clínica Médica Franco da Rocha  
 Avenida Dr. Hamilton Prado
 
-## Licença
-
-MIT
